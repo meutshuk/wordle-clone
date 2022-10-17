@@ -1,0 +1,56 @@
+.keyboard {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3px;
+  //   align-items: center;
+  //   gap: 10px;
+}
+
+.key {
+  height: 3rem;
+  width: 3rem;
+  background-color: rgb(94, 94, 94);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.5px;
+
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(255, 255, 255);
+
+  &__special {
+    width: 5rem;
+    // border: 2px solid white;
+    background-color: rgb(94, 94, 94);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.5px;
+    border-radius: 10px;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.green {
+  background-color: rgb(11, 182, 11);
+  //   font-size: xx-large;
+}
+
+.yellow {
+  background-color: rgb(180, 180, 19);
+  //   font-size: xx-large;
+}
+
+.grey {
+  background-color: grey;
+  //   font-size: xx-large;
+}

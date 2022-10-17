@@ -1,0 +1,19 @@
+.container {
+  // * I want the content to be dividen into 7:3 ratio but dont
+  // * know the properway to solve it
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+
+  .container__grid {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .container__keyboard {
+    flex: 1;
+  }
+}

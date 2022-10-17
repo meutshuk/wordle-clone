@@ -1,0 +1,13 @@
+.navbar__container {
+  //   background-color: var(--background-color);
+  height: 4rem;
+  font-size: 3rem;
+  font-weight: 800;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+
+  border-bottom: 2px white solid;
+}

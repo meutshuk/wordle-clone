@@ -1,0 +1,37 @@
+.tile {
+  height: 4rem;
+  width: 4rem;
+  border: 3px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(255, 255, 255);
+}
+
+.board {
+  display: flex;
+  gap: 10px;
+}
+
+.board__letter {
+  display: flex;
+  gap: 10px;
+
+  &__green {
+    background-color: rgb(123, 209, 44);
+  }
+
+  &__yellow {
+    background-color: rgb(192, 192, 24);
+  }
+
+  &__grey {
+    background-color: rgb(128, 128, 128);
+  }
+}
+
