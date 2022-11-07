@@ -1,12 +1,6 @@
 import React from "react";
 import styles from "../styles/Keyboard.module.scss";
-
-interface IKeyboardProps {
-  onEnter: (word: string) => void;
-  onAdd: (letter: string) => void;
-  onDelete: () => void;
-  keyboardWords: {};
-}
+import { IKeyboardProps, IKeyProps } from "../types/interface";
 
 function Keyboard(props: IKeyboardProps) {
   const { onEnter, onAdd, onDelete, keyboardWords } = props;
@@ -72,14 +66,6 @@ function Keyboard(props: IKeyboardProps) {
 }
 
 export default Keyboard;
-
-interface IKeyProps {
-  value: string;
-  width?: number;
-  children?: React.ReactNode;
-  status?: string;
-  onClick: (value: string) => void;
-}
 
 const Key = (props: IKeyProps) => {
   const { children, width, value, status, onClick } = props;

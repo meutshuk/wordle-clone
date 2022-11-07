@@ -1,14 +1,10 @@
 import React from "react";
 import styles from "../styles/Board.module.scss";
-
-interface IBoardProps {
-  word: string;
-  position: string[];
-}
+import { IBoardProps, ITileProps } from "../types/interface";
 
 function Board(props: IBoardProps) {
   const { word, position } = props;
-  //   const boardString = word.split("");
+
   const boardString = word;
   return (
     <div className={styles.board}>
@@ -19,9 +15,9 @@ function Board(props: IBoardProps) {
             position[i] === "correct"
               ? styles.board__letter__green
               : position[i] === "present"
-              ? styles.board__letter__green
+              ? styles.board__letter__yellow
               : position[i] === "absent"
-              ? styles.board__letter__green
+              ? styles.board__letter__grey
               : styles.board__letter
           }`}
         >
@@ -32,14 +28,10 @@ function Board(props: IBoardProps) {
   );
 }
 
-interface ITileProps {
-  letter?: string;
-}
-
 const Tile = (props: ITileProps) => {
   const { letter } = props;
 
-  return <div className={styles.tile}>{letter || " "}</div>;
+  return <div className={`${styles.tile}`}>{letter || " "}</div>;
 };
 
 export default Board;

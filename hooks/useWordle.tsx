@@ -1,8 +1,18 @@
-import { randomInt } from "crypto";
-import React from "react";
+import React, { Key, useEffect } from "react";
 import { WORDS } from "../assets/words";
+import { IKeyboardWords } from "../types/interface";
+import toast from "react-hot-toast";
+import { setLocalStorage } from "../util/utils";
 
 const useWordle = () => {
+  //   const correctWord = "apple";
+
+  const correctWord = WORDS[Math.floor(Math.random() * 5757)];
+  console.log(correctWord);
+
+  const [wordNumber, setWordNumber] = React.useState(0);
+  const [keyboardWords, setKeyboardWords] = React.useState<IKeyboardWords>({});
+  const [gameStatus, setGameStatus] = React.useState("playing");
   const [boardWords, setBoardWords] = React.useState<string[]>([
     "",
     "",
@@ -11,15 +21,36 @@ const useWordle = () => {
     "",
     "",
   ]);
-  const [wordNumber, setWordNumber] = React.useState(0);
-  const [gameWon, setGameWon] = React.useState(false);
-  const [wordChecked, setWordChecked] = React.useState<string[][]>([]);
-  //   const [correctWord, setCorrectWord] = React.useState(
-  //     WORDS[Math.floor(Math.random() * 10)]
-  //   );
-  const correctWord = "apple";
+  const [wordChecked, setWordChecked] = React.useState<string[][]>([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ]);
+
+  useEffect(() => {
+    if (wordNumber === 6) {
+      toast(correctWord.toUpperCase(), {
+        style: {
+          marginTop: "rem",
+          width: "10rem",
+          border: "2px solid #976a6a",
+          background: "#ffffff",
+          color: "#000000",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+        },
+      });
+      setGameStatus("lost");
+    }
+  }, [wordNumber]);
 
   const handleKeyUp = ({ key }: KeyboardEvent) => {
+    if (gameStatus === "won" || gameStatus === "lost") return;
+
+    // * Check regex for key with a-z and A-Z
     if (/^[a-zA-Z]$/.test(key)) {
       addWord(key.toLowerCase());
     }
@@ -28,9 +59,7 @@ const useWordle = () => {
       removeWord();
     }
 
-    console.log(boardWords[wordNumber]);
-
-    if (boardWords[wordNumber].length == 5 && key === "Enter") {
+    if (key === "Enter") {
       handleEnter();
     }
   };
@@ -38,38 +67,88 @@ const useWordle = () => {
   const handleEnter = () => {
     const word = boardWords[wordNumber];
 
+    if (word.length < 5) {
+      toast("Not enough word", {
+        style: {
+          marginTop: "rem",
+          width: "10rem",
+          border: "2px solid #976a6a",
+          background: "#ffffff",
+          color: "#000000",
+          fontSize: "1rem",
+          fontWeight: "bold",
+          fontFamily: "sans-serif",
+        },
+      });
+      return;
+    }
+
     if (WORDS.includes(word.toLowerCase())) {
-      console.log("word found");
       checkWord(word);
       setWordNumber((prev) => prev + 1);
     } else {
-      alert("Word not found");
+      toast("Not in the word list", {
+        style: {
+          marginTop: "rem",
+          width: "10rem",
+          border: "2px solid #976a6a",
+          background: "#ffffff",
+          color: "#000000",
+          fontSize: "1rem",
+          fontWeight: "bold",
+          fontFamily: "sans-serif",
+        },
+      });
       return;
+    }
+
+    if (word === correctWord) {
+      setGameStatus("won");
+      toast("You Win", {
+        icon: "👏",
+        style: {
+          marginTop: "rem",
+          width: "10rem",
+          border: "2px solid #976a6a",
+          background: "#ffffff",
+          color: "#000000",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+        },
+      });
     }
   };
 
-  //   const checkWord = (word: string) => {
-  //     let letter;
+  const checkWord = (word: string) => {
+    for (let i = 0; i < 5; i++) {
+      let letter: string;
+      let letterPosition = correctWord.indexOf(word[i]);
 
-  //     console.log("check word function");
-  //     for (let i = 0; i < 5; i++) {
-  //       let letterPosition = correctWord.indexOf(word[i]);
-  //       if (letterPosition === -1) {
-  //         letter = "absent";
-  //       } else {
-  //         if (word[i] === correctWord[i]) {
-  //           // shade green
-  //           letter = "correct";
-  //         } else {
-  //           // shade box yellow
-  //           letter = "present";
-  //         }
-  //       }
-  //       setWordChecked((prev) => {
+      if (letterPosition === -1) {
+        letter = "absent";
+      } else {
+        letter = word[i] === correctWord[i] ? "correct" : "present";
+      }
+      setWordChecked((prev) => {
+        const newWordChecked = [...prev];
+        newWordChecked[wordNumber][i] = letter;
+        return newWordChecked;
+      });
+      shadeKeyboardLetter(word[i], letter);
+    }
+  };
 
-  //       });
-  //     }
-  //   };
+  
+
+  const shadeKeyboardLetter = (letter: string, style: string) => {
+    setKeyboardWords((prev) => {
+      const newKeyboardWords = { ...prev };
+
+      newKeyboardWords[letter] =
+        newKeyboardWords[letter] === "correct" ? "correct" : style;
+      return newKeyboardWords;
+    });
+  };
 
   const addWord = (char: string) => {
     setBoardWords((prev) => {
@@ -87,7 +166,15 @@ const useWordle = () => {
     });
   };
 
-  return { addWord, removeWord, handleKeyUp, boardWords };
+  return {
+    addWord,
+    removeWord,
+    handleEnter,
+    handleKeyUp,
+    boardWords,
+    wordChecked,
+    keyboardWords,
+  };
 };
 
 export default useWordle;
