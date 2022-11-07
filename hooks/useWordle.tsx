@@ -10,6 +10,7 @@ const useWordle = () => {
   // const correctWord = WORDS[Math.floor(Math.random() * 5757)];
   console.log(correctWord);
   const ap = "asdf";
+  const [word, setWord] = React.useState<string>("");
   const [wordNumber, setWordNumber] = React.useState(0);
   const [keyboardWords, setKeyboardWords] = React.useState<IKeyboardWords>({});
   const [gameStatus, setGameStatus] = React.useState("playing");
