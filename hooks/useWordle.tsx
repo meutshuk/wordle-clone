@@ -5,11 +5,11 @@ import toast from "react-hot-toast";
 import { setLocalStorage } from "../util/utils";
 
 const useWordle = () => {
-  //   const correctWord = "apple";
+  const correctWord = "apple";
 
-  const correctWord = WORDS[Math.floor(Math.random() * 5757)];
+  // const correctWord = WORDS[Math.floor(Math.random() * 5757)];
   console.log(correctWord);
-
+  const ap = "asdf";
   const [wordNumber, setWordNumber] = React.useState(0);
   const [keyboardWords, setKeyboardWords] = React.useState<IKeyboardWords>({});
   const [gameStatus, setGameStatus] = React.useState("playing");
@@ -137,8 +137,6 @@ const useWordle = () => {
       shadeKeyboardLetter(word[i], letter);
     }
   };
-
-  
 
   const shadeKeyboardLetter = (letter: string, style: string) => {
     setKeyboardWords((prev) => {
